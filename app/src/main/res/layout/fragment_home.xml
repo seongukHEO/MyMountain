@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="30dp"
-        android:src="@android:drawable/ic_input_add"
+        android:src="@drawable/landscape_png"
         app:backgroundTint="@color/material_dynamic_neutral99"
         app:fabSize="normal" />
 </FrameLayout>

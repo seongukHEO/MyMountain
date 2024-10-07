@@ -5,17 +5,17 @@
     <item
         android:id="@+id/home_menu"
         android:enabled="true"
-        android:icon="@android:drawable/ic_menu_myplaces"
+        android:icon="@drawable/home_png"
         android:title="홈" />
     <item
         android:id="@+id/compass_menu"
         android:enabled="true"
-        android:icon="@android:drawable/ic_dialog_map"
+        android:icon="@drawable/compass_png"
         android:title="나침반" />
     <item
         android:id="@+id/weather_menu"
         android:enabled="true"
-        android:icon="@android:drawable/ic_menu_mylocation"
+        android:icon="@drawable/weather_png"
         android:title="날씨정보" />
     <item
         android:id="@+id/my_page_menu"
