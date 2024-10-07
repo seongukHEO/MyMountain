@@ -51,10 +51,10 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
-    implementation("com.google.firebase:firebase-analytics-ktx:22.0.1")
-    implementation("com.google.firebase:firebase-firestore-ktx:25.0.0")
-    implementation("com.google.firebase:firebase-auth-ktx:23.0.0")
+    implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
+    implementation("com.google.firebase:firebase-analytics-ktx:22.1.2")
+    implementation("com.google.firebase:firebase-firestore-ktx:25.1.0")
+
 
     // glide
     implementation ("com.firebaseui:firebase-ui-storage:7.2.0")
@@ -62,9 +62,6 @@ dependencies {
 
     // Gson 라이브러리
     implementation("com.google.code.gson:gson:2.10.1")
-
-    implementation ("com.kakao.sdk:v2-all:2.20.1")
-    implementation ("com.kakao.maps.open:android:2.9.5")
 
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.11.0")

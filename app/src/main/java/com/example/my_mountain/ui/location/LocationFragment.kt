@@ -1,4 +1,4 @@
-package com.example.my_mountain.ui.myPage
+package com.example.my_mountain.ui.location
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,15 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.my_mountain.MainActivity
 import com.example.my_mountain.R
-import com.example.my_mountain.databinding.FragmentMyPageBinding
+import com.example.my_mountain.databinding.FragmentLocationBinding
 
-class MyPageFragment : Fragment() {
+class LocationFragment : Fragment() {
 
-    lateinit var binding: FragmentMyPageBinding
+    lateinit var binding: FragmentLocationBinding
     lateinit var mainActivity: MainActivity
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        binding = FragmentMyPageBinding.inflate(layoutInflater)
+        binding = FragmentLocationBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
         return binding.root
     }
