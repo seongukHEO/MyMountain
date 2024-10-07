@@ -69,4 +69,6 @@ dependencies {
 
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+
+    implementation("de.hdodenhof:circleimageview:2.2.0")
 }

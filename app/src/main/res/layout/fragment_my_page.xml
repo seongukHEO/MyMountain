@@ -102,4 +102,12 @@
         app:icon="@drawable/manage_png"
         app:iconTint="@color/black" />
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/pepe_png"
+        android:background="@drawable/rounded_image"/>
+
 </LinearLayout>
