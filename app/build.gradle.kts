@@ -71,4 +71,6 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
 
     implementation("de.hdodenhof:circleimageview:2.2.0")
+
+    implementation("com.airbnb.android:lottie:6.3.0")
 }
