@@ -68,4 +68,7 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:2.2.0")
 
     implementation("com.airbnb.android:lottie:6.3.0")
+
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.1.0")
 }

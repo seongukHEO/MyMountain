@@ -13,6 +13,9 @@
         android:theme="@style/Theme.My_mountain"
         tools:targetApi="31">
         <activity
+            android:name=".ui.addMountain.AddMountainActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -21,6 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCIUSMwqZY8V0uDt23WuGTARMy_j-jRLTc"/>
     </application>
 
 </manifest>
