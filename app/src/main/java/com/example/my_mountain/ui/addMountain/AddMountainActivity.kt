@@ -115,6 +115,8 @@ class AddMountainActivity : AppCompatActivity() {
                 getLastKnownLocation()
                 getMyLocation()
             }
+
+            mainGoogleMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
         }
     }
 
