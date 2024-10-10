@@ -55,11 +55,6 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics-ktx:22.1.2")
     implementation("com.google.firebase:firebase-firestore-ktx:25.1.0")
 
-
-    // glide
-    implementation ("com.firebaseui:firebase-ui-storage:7.2.0")
-    implementation("com.github.bumptech.glide:glide:4.16.0")
-
     // Gson 라이브러리
     implementation("com.google.code.gson:gson:2.10.1")
 
