@@ -5,6 +5,8 @@
     android:id="@+id/LinearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF"
     android:orientation="vertical"
     android:padding="20dp"
     tools:context=".ui.addMountain.AddMountainActivity">
