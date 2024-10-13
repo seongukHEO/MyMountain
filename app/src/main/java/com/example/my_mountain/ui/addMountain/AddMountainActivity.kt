@@ -1,16 +1,22 @@
 package com.example.my_mountain.ui.addMountain
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.SystemClock
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.my_mountain.R
 import com.example.my_mountain.databinding.ActivityAddMountainBinding
+import com.example.my_mountain.service.StopwatchService
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapsInitializer
@@ -25,14 +31,33 @@ class AddMountainActivity : AppCompatActivity() {
 
     private lateinit var mainGoogleMap: GoogleMap
 
+    private var running = false
+
+    private fun startStopwatchService() {
+        val intent = Intent(this, StopwatchService::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent)  // Android 8.0 이상에서 사용
+        } else {
+            startService(intent)
+        }
+    }
+
+    private fun stopStopwatchService(){
+        val intent = Intent(this, StopwatchService::class.java)
+        stopService(intent)
+    }
+
+
     // 위치 측정이 성공하면 동작할 리스너
     var gpsLocationListener: MyLocationListener? = null
     var networkLocationListener: MyLocationListener? = null
 
     private val permissionList = arrayOf(
         Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.FOREGROUND_SERVICE // 추가
     )
+
 
     private val REQUEST_LOCATION_PERMISSION = 1
 
@@ -43,6 +68,7 @@ class AddMountainActivity : AppCompatActivity() {
 
         binding = ActivityAddMountainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        manageButton()
 
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
 
@@ -57,6 +83,24 @@ class AddMountainActivity : AppCompatActivity() {
     private fun hasLocationPermissions(): Boolean {
         return permissionList.all {
             ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
+        }
+    }
+
+    //버튼 관리
+    private fun manageButton(){
+        binding.apply {
+            buttonMountainStart.setOnClickListener {
+                if (!running){
+                    startStopwatchService()
+                    running = true
+                }
+            }
+            buttonMountainEnd.setOnClickListener {
+                if (running){
+                    stopStopwatchService()
+                    running = false
+                }
+            }
         }
     }
 
