@@ -2,7 +2,10 @@ package com.example.my_mountain.ui.addMountain
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -14,6 +17,7 @@ import android.os.SystemClock
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.my_mountain.R
 import com.example.my_mountain.databinding.ActivityAddMountainBinding
 import com.example.my_mountain.service.StopwatchService
@@ -40,6 +44,18 @@ class AddMountainActivity : AppCompatActivity() {
         } else {
             startService(intent)
         }
+    }
+
+    private val updateTime = object : BroadcastReceiver(){
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == "STOPWATCH_UPDATE"){
+                val time = intent.getStringExtra("time")
+                if (time != null) {
+                    updateStopwatchText(time)
+                }
+            }
+        }
+
     }
 
     private fun stopStopwatchService(){
@@ -70,12 +86,23 @@ class AddMountainActivity : AppCompatActivity() {
         setContentView(binding.root)
         manageButton()
 
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            updateTime,
+            IntentFilter("STOPWATCH_UPDATE")
+        )
+
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
 
         if (hasLocationPermissions()) {
             settingGoogleMap()
         } else {
             ActivityCompat.requestPermissions(this, permissionList, REQUEST_LOCATION_PERMISSION)
+        }
+    }
+
+    private fun updateStopwatchText(time: String){
+        binding.apply {
+            stopWatchTextView.text = time
         }
     }
 

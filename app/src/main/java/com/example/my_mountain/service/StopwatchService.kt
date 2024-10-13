@@ -16,6 +16,7 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.my_mountain.R
 
 class StopwatchService : Service() {
@@ -43,6 +44,11 @@ class StopwatchService : Service() {
 
             val notification = buildNotification(timeString)
             startForeground(NOTIFICATION_ID, notification)
+            Log.d("StopwatchService", "알림 업데이트: $timeString")
+
+            val intent = Intent("STOPWATCH_UPDATE")
+            intent.putExtra("time", timeString)
+            LocalBroadcastManager.getInstance(this@StopwatchService).sendBroadcast(intent)
 
 
 
