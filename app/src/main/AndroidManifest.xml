@@ -18,6 +18,15 @@
         android:theme="@style/Theme.My_mountain"
         tools:targetApi="31">
         <activity
+            android:name=".ui.myPage.QuestionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.myPage.WeatherInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.myPage.CompassActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.myPage.MountainListActivity"
             android:exported="false" />
 
@@ -26,7 +35,7 @@
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="location"
-            tools:ignore="ForegroundServicePermission"></service>
+            tools:ignore="ForegroundServicePermission" />
 
         <activity
             android:name=".ui.addMountain.AddMountainActivity"
