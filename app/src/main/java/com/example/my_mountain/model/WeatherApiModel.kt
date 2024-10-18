@@ -4,73 +4,71 @@ package com.example.my_mountain.model
 import com.tickaroo.tikxml.annotation.Element
 import com.tickaroo.tikxml.annotation.PropertyElement
 import com.tickaroo.tikxml.annotation.Xml
-import retrofit2.http.Body
-import retrofit2.http.Header
 
 @Xml (name = "response")
 data class WeatherApiModel(
     @Element(name = "body")
-    val body: Body,
+    val body: Body?,
     @Element(name = "header")
-    val header: Header
+    val header: Header?
 )
 
 @Xml (name = "header")
 data class Header(
     @PropertyElement (name = "resultCode")
-    val resultCode: Int,
+    val resultCode: Int?,
     @PropertyElement (name = "resultMsg")
-    val resultMsg: String
+    val resultMsg: String?
 )
 
 @Xml (name = "body")
 data class Body(
     @Element (name = "items")
-    val items: Items,
+    val items: Items?,
     @PropertyElement (name = "numOfRows")
-    val numOfRows: Int,
+    val numOfRows: Int?,
     @PropertyElement (name = "pageNo")
-    val pageNo: Int,
+    val pageNo: Int?,
     @PropertyElement (name = "totalCount")
-    val totalCount:Int
+    val totalCount:Int?
 )
 
 @Xml(name = "items")
 data class Items(
     @PropertyElement(name = "item")
-    val item: List<Item>
+    val item: List<Item>?
 )
 
 @Xml(name = "Item")
 data class Item(
     @PropertyElement(name = "cprn")
-    val cprn:String,
+    val cprn:String?,
 
     @PropertyElement (name = "hm10m")
-    val hm10m: String,
+    val hm10m: String?,
 
     @PropertyElement (name = "hm2m")
-    val hm2m: String,
+    val hm2m: String?,
 
     @PropertyElement(name = "obsname")
-    val obsname: String,
+    val obsname: String?,
 
     @PropertyElement(name = "tm")
-    val tm: String,
+    val tm: String?,
 
     @PropertyElement(name = "tm10m")
-    val tm10m: String,
+    val tm10m: String?,
 
     @PropertyElement(name = "tm2m")
-    val tm2m:String,
+    val tm2m:String?,
 
     @PropertyElement(name = "ts")
-    val ts:String,
+    val ts:String?,
 
     @PropertyElement(name = "ws10m")
-    val ws10m: String,
+    val ws10m: String?,
 
     @PropertyElement(name = "ws2m")
-    val ws2m: String
+    val ws2m: String?
 )
 
