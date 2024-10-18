@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
 }
 
 android {
@@ -61,6 +62,13 @@ dependencies {
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+
+    implementation("com.tickaroo.tikxml:annotation:0.8.13")
+    implementation("com.tickaroo.tikxml:core:0.8.13")
+    implementation("com.tickaroo.tikxml:retrofit-converter:0.8.13")
+    kapt("com.tickaroo.tikxml:processor:0.8.13")
+
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.11.0")
 
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
