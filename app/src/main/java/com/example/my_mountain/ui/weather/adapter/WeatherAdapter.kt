@@ -2,30 +2,27 @@ package com.example.my_mountain.ui.weather.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.my_mountain.databinding.ItemWeatherReBinding
+import com.example.my_mountain.model.Item
 
-class WeatherAdapter():RecyclerView.Adapter<WeatherViewHolder>() {
+class WeatherAdapter(): ListAdapter<Item, WeatherAdapter.WeatherViewHolder>(differ) {
 
     private lateinit var recyclerviewClick: WeatherClickInterface
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-
-        val itemWeatherReBinding = ItemWeatherReBinding.inflate(layoutInflater)
-        val viewHolder = WeatherViewHolder(itemWeatherReBinding)
-        return viewHolder
-    }
-
-    override fun getItemCount(): Int {
-        return 10
-    }
-
-    override fun onBindViewHolder(holder: WeatherViewHolder, position: Int) {
-        holder.itemWeatherReBinding.root.setOnClickListener {
-            recyclerviewClick.recyclerviewClickLister()
+    inner class WeatherViewHolder(val binding: ItemWeatherReBinding): RecyclerView.ViewHolder(binding.root){
+        fun bind(weatherData: Item){
+            binding.textWeatherMountain.text = weatherData.obsname
+            binding.textWeatherTemp.text = weatherData.tm
+            binding.textWeatherRain.text = weatherData.cprn
+            binding.root.setOnClickListener {
+                recyclerviewClick.recyclerviewClickLister()
+            }
         }
     }
+
 
     interface WeatherClickInterface{
         fun recyclerviewClickLister()
@@ -34,16 +31,26 @@ class WeatherAdapter():RecyclerView.Adapter<WeatherViewHolder>() {
     fun recyclerviewClick(recyclerviewClick: WeatherClickInterface){
         this.recyclerviewClick = recyclerviewClick
     }
-}
 
-class WeatherViewHolder(itemWeatherReBinding: ItemWeatherReBinding):RecyclerView.ViewHolder(itemWeatherReBinding.root){
-    val itemWeatherReBinding: ItemWeatherReBinding
+    companion object {
+        val differ = object : DiffUtil.ItemCallback<Item>(){
+            override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
+                return oldItem == newItem
+            }
 
-    init {
-        this.itemWeatherReBinding = itemWeatherReBinding
-        this.itemWeatherReBinding.root.layoutParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
+            override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
+                return oldItem == newItem
+            }
+
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {
+        return WeatherViewHolder(ItemWeatherReBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    }
+
+    override fun onBindViewHolder(holder: WeatherViewHolder, position: Int) {
+        holder.bind(currentList[position])
     }
 }
+

@@ -28,7 +28,7 @@ object RetrofitWeatherInstance {
         val parser = TikXml.Builder().exceptionOnUnreadXml(false).build()
 
         Retrofit.Builder()
-            .baseUrl("http://apis.data.go.kr/1400377/mtweather")
+            .baseUrl("https://apis.data.go.kr/1400377/mtweather/")
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(TikXmlConverterFactory.create(parser))
             .client(client)
