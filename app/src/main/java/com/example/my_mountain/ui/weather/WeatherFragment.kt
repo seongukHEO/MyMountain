@@ -70,7 +70,7 @@ class WeatherFragment : Fragment() {
             .enqueue(object : retrofit2.Callback<WeatherApiModel>{
                 override fun onResponse(p0: Call<WeatherApiModel>, p1: Response<WeatherApiModel>) {
                     val result = p1.body()?.body?.items?.item
-                    Log.e("seonguk", "${result?.map { it.cprn }}")
+                    Log.e("httpGet", "${result?.map { it.cprn }}")
                 }
 
                 override fun onFailure(p0: Call<WeatherApiModel>, p1: Throwable) {
