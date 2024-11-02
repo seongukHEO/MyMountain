@@ -46,7 +46,7 @@ class WeatherFragment : Fragment() {
         binding = FragmentWeatherBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
         weatherAdapterAll()
-        retrofitWork()
+        //retrofitWork()
         return binding.root
     }
 
