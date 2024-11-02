@@ -17,6 +17,7 @@ import com.example.my_mountain.model.WeatherApiModel
 import com.example.my_mountain.retrofit.RetrofitWeatherInstance
 import com.example.my_mountain.ui.weather.adapter.WeatherAdapter
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import org.checkerframework.checker.units.qual.t
 import retrofit2.Call
 import retrofit2.Response
 import java.text.SimpleDateFormat
@@ -66,7 +67,9 @@ class WeatherFragment : Fragment() {
         val service = RetrofitWeatherInstance.retrofitService
         val currentDate = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE)
 
-        service.getWeather(RetrofitWeatherInstance.LOCAL_KEY, 1, 10, "xml", 10, 1910, currentDate)
+        service.getWeather(RetrofitWeatherInstance.LOCAL_KEY, 1, 10, "xml", 1, 1910,
+            202106301809.toString()
+        )
             .enqueue(object : retrofit2.Callback<WeatherApiModel>{
                 override fun onResponse(p0: Call<WeatherApiModel>, p1: Response<WeatherApiModel>) {
                     val result = p1.body()?.body?.items?.item
@@ -74,7 +77,7 @@ class WeatherFragment : Fragment() {
                 }
 
                 override fun onFailure(p0: Call<WeatherApiModel>, p1: Throwable) {
-                    TODO("Not yet implemented")
+                    Log.e("WeatherFragment", "API 호출 실패: ${p1.message}")
                 }
 
             })

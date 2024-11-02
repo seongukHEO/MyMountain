@@ -10,8 +10,8 @@ interface RetrofitWeatherService {
 
     @GET("mountListSearch")
     fun getWeather(
-        @Query("ServiceKey") ServiceKey:String,
-        @Query("PageNo") PageNo: Int,
+        @Query("serviceKey") ServiceKey:String,
+        @Query("pageNo") PageNo: Int,
         @Query("numOfRows") numOfRows: Int,
         @Query("_type") _type: String,
         @Query("localArea") localArea:Int,
