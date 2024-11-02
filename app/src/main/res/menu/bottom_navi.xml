@@ -10,7 +10,7 @@
     <item
         android:id="@+id/compass_menu"
         android:enabled="true"
-        android:icon="@drawable/compass_png"
+        android:icon="@drawable/compass_logo"
         android:title="나침반" />
     <item
         android:id="@+id/weather_menu"

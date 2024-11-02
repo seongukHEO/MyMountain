@@ -1,5 +1,6 @@
 package com.example.my_mountain.ui.location
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -61,26 +62,49 @@ class LocationFragment : Fragment(), SensorEventListener {
         sensorManager.unregisterListener(this)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onSensorChanged(event: SensorEvent) {
-        when(event.sensor.type){
+        when(event.sensor.type) {
             Sensor.TYPE_ACCELEROMETER -> gravity = event.values.clone()
             Sensor.TYPE_MAGNETIC_FIELD -> geomagnetic = event.values.clone()
         }
 
-        if (gravity.isNotEmpty() && geomagnetic.isNotEmpty()){
+        if (gravity.isNotEmpty() && geomagnetic.isNotEmpty()) {
             val R = FloatArray(9)
             val I = FloatArray(9)
             val success = SensorManager.getRotationMatrix(R, I, gravity, geomagnetic)
-            if (success){
+            if (success) {
                 val orientation = FloatArray(3)
                 SensorManager.getOrientation(R, orientation)
                 val azimuthInRadians = orientation[0]
-                val azimuthInDegrees = Math.toDegrees(azimuthInRadians.toDouble()).toFloat()
+                var azimuthInDegrees = Math.toDegrees(azimuthInRadians.toDouble()).toFloat()
 
+                // 음수일 경우 360을 더해 양수로 변환
+                if (azimuthInDegrees < 0) {
+                    azimuthInDegrees += 360
+                }
+
+                // 방향 회전 애니메이션
                 compassImageView.rotation = -azimuthInDegrees
+
+                // 현재 각도에 따른 방향 텍스트 설정
+                val direction = when {
+                    azimuthInDegrees >= 337.5 || azimuthInDegrees < 22.5 -> "북"
+                    azimuthInDegrees >= 22.5 && azimuthInDegrees < 67.5 -> "북동"
+                    azimuthInDegrees >= 67.5 && azimuthInDegrees < 112.5 -> "동"
+                    azimuthInDegrees >= 112.5 && azimuthInDegrees < 157.5 -> "남동"
+                    azimuthInDegrees >= 157.5 && azimuthInDegrees < 202.5 -> "남"
+                    azimuthInDegrees >= 202.5 && azimuthInDegrees < 247.5 -> "남서"
+                    azimuthInDegrees >= 247.5 && azimuthInDegrees < 292.5 -> "서"
+                    else -> "북서"
+                }
+
+                // 방향과 각도를 TextView에 표시
+                binding.textCurrentLocation.text = "현재 방향: ${azimuthInDegrees.toInt()}° ($direction)"
             }
         }
     }
+
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
 
