@@ -7,25 +7,30 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.SystemClock
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.my_mountain.R
 import com.example.my_mountain.databinding.ActivityAddMountainBinding
+import com.example.my_mountain.service.LocationService
 import com.example.my_mountain.service.StopwatchService
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Polyline
+import com.google.android.gms.maps.model.PolylineOptions
+
+
 
 class AddMountainActivity : AppCompatActivity() {
 
@@ -34,6 +39,23 @@ class AddMountainActivity : AppCompatActivity() {
     private lateinit var locationManager: LocationManager
 
     private lateinit var mainGoogleMap: GoogleMap
+    private var pathPoints = mutableListOf<LatLng>()
+    private lateinit var polyline: Polyline
+    private val polylineOptions = PolylineOptions().color(Color.GREEN).width(10f)
+
+    private val locationReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == "LOCATION_UPDATE") {
+                val location = intent.getParcelableExtra<Location>("location")
+                location?.let {
+                    val latLng = LatLng(it.latitude, it.longitude)
+                    pathPoints.add(latLng)
+                    polyline.points = pathPoints
+                    Log.d("PolylineUpdate", "Polyline updated with points: $pathPoints")
+                }
+            }
+        }
+    }
 
     private var running = false
 
@@ -91,6 +113,11 @@ class AddMountainActivity : AppCompatActivity() {
             IntentFilter("STOPWATCH_UPDATE")
         )
 
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            locationReceiver,
+            IntentFilter("LOCATION_UPDATE")
+        )
+
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
 
         if (hasLocationPermissions()) {
@@ -119,12 +146,14 @@ class AddMountainActivity : AppCompatActivity() {
             buttonMountainStart.setOnClickListener {
                 if (!running){
                     startStopwatchService()
+                    startTrackingLocation()
                     running = true
                 }
             }
             buttonMountainEnd.setOnClickListener {
                 if (running){
                     stopStopwatchService()
+                    stopTrackingLocation()
                     running = false
                 }
             }
@@ -152,17 +181,22 @@ class AddMountainActivity : AppCompatActivity() {
         override fun onLocationChanged(location: Location) {
             when (location.provider) {
                 LocationManager.GPS_PROVIDER -> {
-                    locationManager.removeUpdates(gpsLocationListener!!)
-                    gpsLocationListener = null
+                    gpsLocationListener?.let {
+                        locationManager.removeUpdates(it)
+                        gpsLocationListener = null
+                    }
                 }
                 LocationManager.NETWORK_PROVIDER -> {
-                    locationManager.removeUpdates(networkLocationListener!!)
-                    networkLocationListener = null
+                    networkLocationListener?.let {
+                        locationManager.removeUpdates(it)
+                        networkLocationListener = null
+                    }
                 }
             }
             setMyLocation(location)
         }
     }
+
 
     private fun setMyLocation(location: Location) {
         val userLocation = LatLng(location.latitude, location.longitude)
@@ -177,6 +211,9 @@ class AddMountainActivity : AppCompatActivity() {
         supportMapFragment.getMapAsync { googleMap ->
             mainGoogleMap = googleMap
 
+            // Polyline을 GoogleMap에 추가
+            polyline = mainGoogleMap.addPolyline(polylineOptions)
+
             // 지도 설정 완료 후 위치 설정
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -190,6 +227,7 @@ class AddMountainActivity : AppCompatActivity() {
             mainGoogleMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
         }
     }
+
 
     private fun getLastKnownLocation() {
         val gpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
@@ -219,6 +257,7 @@ class AddMountainActivity : AppCompatActivity() {
                     0.0f,
                     gpsLocationListener!!
                 )
+                Log.d("AddMountainActivity", "GPS LocationListener initialized")
             }
         }
 
@@ -232,7 +271,26 @@ class AddMountainActivity : AppCompatActivity() {
                     0.0f,
                     networkLocationListener!!
                 )
+                Log.d("AddMountainActivity", "Network LocationListener initialized")
             }
         }
     }
+
+
+    //polyLine
+    private fun startTrackingLocation(){
+        val intent = Intent(this, LocationService::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            startForegroundService(intent)
+        }else{
+            startService(intent)
+        }
+    }
+
+    private fun stopTrackingLocation(){
+        val intent = Intent(this, LocationService::class.java)
+        stopService(intent)
+    }
+
+
 }
