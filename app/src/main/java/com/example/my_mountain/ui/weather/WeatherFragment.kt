@@ -69,8 +69,10 @@ class WeatherFragment : Fragment() {
         service.getWeather(RetrofitWeatherInstance.decodedKey, 10, 1, 20241105, 1000, 55, 127)
             .enqueue(object : retrofit2.Callback<WeatherApiModel>{
                 override fun onResponse(p0: Call<WeatherApiModel>, p1: Response<WeatherApiModel>) {
-                    val result = p1.body()?.body
-                    Log.d("test1234", "${result}")
+                    val result = p1.body()?.body?.items?.itemList
+                    weatherAdapter.submitList(result)
+
+
                 }
 
                 override fun onFailure(p0: Call<WeatherApiModel>, p1: Throwable) {
