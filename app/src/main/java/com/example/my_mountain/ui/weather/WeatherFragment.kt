@@ -66,18 +66,15 @@ class WeatherFragment : Fragment() {
     private fun retrofitWork(){
         val service = RetrofitWeatherInstance.retrofitService
         val currentDate = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE)
-
-        service.getWeather(RetrofitWeatherInstance.decodedKey, 1, 10, "xml", 10, 1910,
-            202106301809.toString()
-        )
+        service.getWeather(RetrofitWeatherInstance.decodedKey, 10, 1, 20241105, 1000, 55, 127)
             .enqueue(object : retrofit2.Callback<WeatherApiModel>{
                 override fun onResponse(p0: Call<WeatherApiModel>, p1: Response<WeatherApiModel>) {
-                    val result = p1.body()?.body?.items?.item
-                    Log.e("httpGet", "${result?.map { it.cprn }}")
+                    val result = p1.body()?.body
+                    Log.d("test1234", "${result}")
                 }
 
                 override fun onFailure(p0: Call<WeatherApiModel>, p1: Throwable) {
-                    Log.e("WeatherFragment", "API 호출 실패: ${p1.message}")
+                    Log.e("test1234", "${p1.message}")
                 }
 
             })

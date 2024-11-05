@@ -14,9 +14,9 @@ class WeatherAdapter(): ListAdapter<Item, WeatherAdapter.WeatherViewHolder>(diff
 
     inner class WeatherViewHolder(val binding: ItemWeatherReBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(weatherData: Item){
-            binding.textWeatherMountain.text = weatherData.obsname
-            binding.textWeatherTemp.text = weatherData.tm
-            binding.textWeatherRain.text = weatherData.cprn
+            binding.textWeatherMountain.text = weatherData.obsrValue.toString()
+            binding.textWeatherTemp.text = weatherData.baseDate
+            binding.textWeatherRain.text = weatherData.baseTime
             binding.root.setOnClickListener {
                 recyclerviewClick.recyclerviewClickLister()
             }

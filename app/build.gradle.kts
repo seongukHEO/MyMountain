@@ -68,7 +68,7 @@ dependencies {
     implementation("com.tickaroo.tikxml:annotation:0.8.13")
     implementation("com.tickaroo.tikxml:core:0.8.13")
     implementation("com.tickaroo.tikxml:retrofit-converter:0.8.13")
-    annotationProcessor("com.tickaroo.tikxml:processor:0.8.13")
+    kapt("com.tickaroo.tikxml:processor:0.8.13")
 
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.11.0")
 

@@ -28,10 +28,10 @@ object RetrofitWeatherInstance {
     }
 
     private val getInstance: Retrofit by lazy {
-        val parser = TikXml.Builder().exceptionOnUnreadXml(false).build()
+        val parser = TikXml.Builder().exceptionOnUnreadXml(true).build()
 
         Retrofit.Builder()
-            .baseUrl("https://apis.data.go.kr/1400377/mtweather/")
+            .baseUrl("https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/")
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(TikXmlConverterFactory.create(parser))
             .client(client)

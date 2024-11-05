@@ -8,14 +8,14 @@ import retrofit2.http.Query
 
 interface RetrofitWeatherService {
 
-    @GET("mountListSearch")
+    @GET("getUltraSrtNcst")
     fun getWeather(
-        @Query("serviceKey") ServiceKey:String,
-        @Query("pageNo") PageNo: Int,
+        @Query("serviceKey") serviceKey:String,
         @Query("numOfRows") numOfRows: Int,
-        @Query("_type") _type: String,
-        @Query("localArea") localArea:Int,
-        @Query("obsid") obsid:Int,
-        @Query("tm") tm:String
+        @Query("pageNo") pageNo: Int,
+        @Query("base_date") base_date: Int,
+        @Query("base_time") base_time:Int,
+        @Query("nx") nx:Int,
+        @Query("ny") ny:Int
     ) : Call<WeatherApiModel>
 }
