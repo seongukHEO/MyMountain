@@ -7,10 +7,11 @@ import com.tickaroo.tikxml.annotation.Xml
 
 @Xml (name = "response")
 data class WeatherApiModel(
+    @Element(name = "header")
+    val header: Header?,
+
     @Element(name = "body")
     val body: Body?,
-    @Element(name = "header")
-    val header: Header?
 )
 
 @Xml (name = "header")
@@ -35,11 +36,11 @@ data class Body(
 
 @Xml(name = "items")
 data class Items(
-    @PropertyElement(name = "item")
+    @Element(name = "item")
     val item: List<Item>?
 )
 
-@Xml(name = "Item")
+@Xml(name = "item")
 data class Item(
     @PropertyElement(name = "cprn")
     val cprn:String?,

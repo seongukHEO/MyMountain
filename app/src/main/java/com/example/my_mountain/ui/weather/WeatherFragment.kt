@@ -46,7 +46,7 @@ class WeatherFragment : Fragment() {
         binding = FragmentWeatherBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
         weatherAdapterAll()
-        //retrofitWork()
+        retrofitWork()
         return binding.root
     }
 
@@ -67,7 +67,7 @@ class WeatherFragment : Fragment() {
         val service = RetrofitWeatherInstance.retrofitService
         val currentDate = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE)
 
-        service.getWeather(RetrofitWeatherInstance.LOCAL_KEY, 1, 10, "xml", 1, 1910,
+        service.getWeather(RetrofitWeatherInstance.decodedKey, 1, 10, "xml", 10, 1910,
             202106301809.toString()
         )
             .enqueue(object : retrofit2.Callback<WeatherApiModel>{

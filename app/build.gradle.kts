@@ -3,7 +3,8 @@ import org.jetbrains.kotlin.fir.declarations.builder.buildScript
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    //id("kotlin-kapt")
+    id("kotlin-kapt")
+
 }
 
 android {
