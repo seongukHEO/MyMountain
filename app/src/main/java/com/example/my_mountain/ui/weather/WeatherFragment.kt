@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my_mountain.MainActivity
 import com.example.my_mountain.R
 import com.example.my_mountain.databinding.FragmentWeatherBinding
-import com.example.my_mountain.model.WeatherApiModel
-import com.example.my_mountain.retrofit.RetrofitWeatherInstance
 import com.example.my_mountain.ui.weather.adapter.WeatherAdapter
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import org.checkerframework.checker.units.qual.t
@@ -46,7 +44,6 @@ class WeatherFragment : Fragment() {
         binding = FragmentWeatherBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
         weatherAdapterAll()
-        retrofitWork()
         return binding.root
     }
 
@@ -61,24 +58,4 @@ class WeatherFragment : Fragment() {
         }
     }
 
-    //Retrofit
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun retrofitWork(){
-        val service = RetrofitWeatherInstance.retrofitService
-        val currentDate = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE)
-        service.getWeather(RetrofitWeatherInstance.decodedKey, 10, 1, 20241105, 1000, 55, 127)
-            .enqueue(object : retrofit2.Callback<WeatherApiModel>{
-                override fun onResponse(p0: Call<WeatherApiModel>, p1: Response<WeatherApiModel>) {
-                    val result = p1.body()?.body?.items?.itemList
-                    weatherAdapter.submitList(result)
-
-
-                }
-
-                override fun onFailure(p0: Call<WeatherApiModel>, p1: Throwable) {
-                    Log.e("test1234", "${p1.message}")
-                }
-
-            })
-    }
 }
