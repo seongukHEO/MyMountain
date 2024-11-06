@@ -54,21 +54,16 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
-    implementation("com.google.firebase:firebase-analytics-ktx:22.1.2")
-    implementation("com.google.firebase:firebase-firestore-ktx:25.1.0")
-
     // Gson 라이브러리
     implementation("com.google.code.gson:gson:2.10.1")
 
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
 
-    implementation("com.tickaroo.tikxml:annotation:0.8.13")
-    implementation("com.tickaroo.tikxml:core:0.8.13")
-    implementation("com.tickaroo.tikxml:retrofit-converter:0.8.13")
-    kapt("com.tickaroo.tikxml:processor:0.8.13")
+//    implementation("com.tickaroo.tikxml:annotation:0.8.13")
+//    implementation("com.tickaroo.tikxml:core:0.8.13")
+//    implementation("com.tickaroo.tikxml:retrofit-converter:0.8.13")
+//    kapt("com.tickaroo.tikxml:processor:0.8.13")
 
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.11.0")
 
@@ -81,4 +76,13 @@ dependencies {
 
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation("com.google.android.gms:play-services-location:21.1.0")
+
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
+    implementation("com.google.firebase:firebase-analytics-ktx:22.0.1")
+    implementation("com.google.firebase:firebase-firestore-ktx:25.0.0")
+    implementation("com.google.firebase:firebase-auth-ktx:23.0.0")
 }
