@@ -6,7 +6,7 @@
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".ui.weather.WeatherFragment">
+    tools:context=".ui.weather.LocationInfoFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewWeather"

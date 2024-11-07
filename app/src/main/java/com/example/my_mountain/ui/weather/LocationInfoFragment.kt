@@ -8,27 +8,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.constraintlayout.helper.widget.Carousel.Adapter
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my_mountain.MainActivity
-import com.example.my_mountain.R
 import com.example.my_mountain.databinding.FragmentWeatherBinding
-import com.example.my_mountain.ui.weather.adapter.WeatherAdapter
+import com.example.my_mountain.ui.weather.adapter.WeatherLocationAdapter
+import com.example.my_mountain.ui.weather.viewModel.WeatherLocationViewModel
 import com.google.android.material.divider.MaterialDividerItemDecoration
-import org.checkerframework.checker.units.qual.t
-import retrofit2.Call
-import retrofit2.Response
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import kotlinx.coroutines.launch
 
-class WeatherFragment : Fragment() {
+class LocationInfoFragment : Fragment() {
     lateinit var binding: FragmentWeatherBinding
     lateinit var mainActivity: MainActivity
 
-    val weatherAdapter : WeatherAdapter by lazy {
-        val adapter = WeatherAdapter()
-        adapter.recyclerviewClick(object : WeatherAdapter.WeatherClickInterface{
+    val weatherLocationAdapter : WeatherLocationAdapter by lazy {
+        val adapter = WeatherLocationAdapter()
+        adapter.recyclerviewClick(object : WeatherLocationAdapter.WeatherClickInterface{
             override fun recyclerviewClickLister() {
 
             }
@@ -38,22 +34,36 @@ class WeatherFragment : Fragment() {
         adapter
     }
 
+    val viewModel : WeatherLocationViewModel by viewModels()
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = FragmentWeatherBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
         weatherAdapterAll()
+        gettingData()
         return binding.root
     }
 
     private fun weatherAdapterAll(){
         binding.apply {
             recyclerViewWeather.apply {
-                adapter = weatherAdapter
+                adapter = weatherLocationAdapter
                 layoutManager = LinearLayoutManager(mainActivity)
                 val deco = MaterialDividerItemDecoration(mainActivity, MaterialDividerItemDecoration.VERTICAL)
                 addItemDecoration(deco)
+            }
+        }
+    }
+
+    //데이터 받아오기
+    private fun gettingData() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.getLocationListData()
+            viewModel.locationInfoList.observe(requireActivity()) { value ->
+                Log.d("test1234", "${value.size}")
+                weatherLocationAdapter.submitList(value)
             }
         }
     }

@@ -2,16 +2,14 @@ package com.example.my_mountain
 
 import android.os.Bundle
 import android.os.SystemClock
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.FragmentManager
 import com.example.my_mountain.databinding.ActivityMainBinding
 import com.example.my_mountain.ui.home.HomeFragment
 import com.example.my_mountain.ui.location.LocationFragment
 import com.example.my_mountain.ui.myPage.MyPageFragment
-import com.example.my_mountain.ui.weather.WeatherFragment
+import com.example.my_mountain.ui.weather.LocationInfoFragment
+import com.google.firebase.FirebaseApp
 
 class MainActivity : AppCompatActivity() {
 
@@ -85,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         val fragment = when (name) {
             MainFragmentName.HOME_FRAGMENT -> HomeFragment()
             MainFragmentName.LOCATION_FRAGMENT -> LocationFragment()
-            MainFragmentName.WEATHER_FRAGMENT -> WeatherFragment()
+            MainFragmentName.WEATHER_FRAGMENT -> LocationInfoFragment()
             MainFragmentName.MY_PAGE_FRAGMENT -> MyPageFragment()
 
         }

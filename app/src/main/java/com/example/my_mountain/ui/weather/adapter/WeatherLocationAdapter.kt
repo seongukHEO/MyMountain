@@ -6,17 +6,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.my_mountain.databinding.ItemWeatherReBinding
-import com.example.my_mountain.model.Item
+import com.example.my_mountain.model.LocationInfoModel
 
-class WeatherAdapter(): ListAdapter<Item, WeatherAdapter.WeatherViewHolder>(differ) {
+class WeatherLocationAdapter(): ListAdapter<LocationInfoModel, WeatherLocationAdapter.WeatherViewHolder>(differ) {
 
     private lateinit var recyclerviewClick: WeatherClickInterface
 
     inner class WeatherViewHolder(val binding: ItemWeatherReBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(weatherData: Item){
-            binding.textWeatherMountain.text = weatherData.obsrValue.toString()
-            binding.textWeatherTemp.text = weatherData.baseDate
-            binding.textWeatherRain.text = weatherData.baseTime
+        fun bind(weatherData: LocationInfoModel){
+            binding.textWeatherMountain.text = weatherData.locationName
+            binding.textWeatherTemp.text = weatherData.locationLat.toString()
+            binding.textWeatherRain.text = weatherData.locationLon.toString()
             binding.root.setOnClickListener {
                 recyclerviewClick.recyclerviewClickLister()
             }
@@ -33,12 +33,12 @@ class WeatherAdapter(): ListAdapter<Item, WeatherAdapter.WeatherViewHolder>(diff
     }
 
     companion object {
-        val differ = object : DiffUtil.ItemCallback<Item>(){
-            override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
+        val differ = object : DiffUtil.ItemCallback<LocationInfoModel>(){
+            override fun areItemsTheSame(oldItem: LocationInfoModel, newItem: LocationInfoModel): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
+            override fun areContentsTheSame(oldItem: LocationInfoModel, newItem: LocationInfoModel): Boolean {
                 return oldItem == newItem
             }
 

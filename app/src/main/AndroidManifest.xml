@@ -43,7 +43,6 @@
             android:exported="false"
             android:foregroundServiceType="location"
             tools:ignore="ForegroundServicePermission" />
-
         <activity
             android:name=".ui.addMountain.AddMountainActivity"
             android:exported="false" />
