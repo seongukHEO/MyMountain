@@ -14,9 +14,7 @@ class WeatherLocationAdapter(): ListAdapter<LocationInfoModel, WeatherLocationAd
 
     inner class WeatherViewHolder(val binding: ItemWeatherReBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(weatherData: LocationInfoModel){
-            binding.textWeatherMountain.text = weatherData.locationName
-            binding.textWeatherTemp.text = weatherData.locationLat.toString()
-            binding.textWeatherRain.text = weatherData.locationLon.toString()
+            binding.textWeatherMountain.text = "지역 : ${weatherData.locationName}"
             binding.root.setOnClickListener {
                 recyclerviewClick.recyclerviewClickLister()
             }
