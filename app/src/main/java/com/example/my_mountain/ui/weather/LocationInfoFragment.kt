@@ -1,5 +1,6 @@
 package com.example.my_mountain.ui.weather
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -25,10 +26,13 @@ class LocationInfoFragment : Fragment() {
     val weatherLocationAdapter : WeatherLocationAdapter by lazy {
         val adapter = WeatherLocationAdapter()
         adapter.recyclerviewClick(object : WeatherLocationAdapter.WeatherClickInterface{
-            override fun recyclerviewClickLister() {
-
+            override fun recyclerviewClickLister(name:String, nx: Int, ny: Int) {
+                val intent = Intent(mainActivity, WeatherDetailActivity::class.java)
+                intent.putExtra("name", name)
+                intent.putExtra("ny", ny)
+                intent.putExtra("nx", nx)
+                startActivity(intent)
             }
-
         })
 
         adapter
