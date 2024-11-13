@@ -1,11 +1,16 @@
 package com.example.my_mountain.ui.weather
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.my_mountain.R
+import com.example.my_mountain.dataSource.WeatherDataSource
 import com.example.my_mountain.databinding.ActivityWeatherDetailActicityBinding
 import com.example.my_mountain.databinding.ActivityWeatherInfoBinding
+import com.example.my_mountain.databinding.ItemForecastBinding
 
 class WeatherDetailActivity : AppCompatActivity() {
 
@@ -15,11 +20,13 @@ class WeatherDetailActivity : AppCompatActivity() {
     private var nx: Int = 0
     private var ny:Int = 0
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWeatherDetailActicityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         getDataLocation()
+        applyApi()
 
     }
 
@@ -32,6 +39,42 @@ class WeatherDetailActivity : AppCompatActivity() {
             locationTextView.text = locationName
 
         }
+        Log.e("test1234", "${nx}, ${ny}")
+    }
+
+    //공공데이터 적용하기
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun applyApi(){
+        val weatherData = WeatherDataSource()
+
+        weatherData.getVillageForecast(
+            nx,
+            ny,
+            successCallback = {list ->
+                val currentForecast = list.first()
+
+                binding.temperatureTextview.text = currentForecast.temperature.toString()
+                binding.skyTextview.text = currentForecast.precipitationType
+                binding.precipitationTextview.text = "강수 확률 : ${currentForecast.precipitation}"
+
+                binding.childForecastLayout.apply {
+                    list.forEachIndexed { index, forecastModel ->
+                        if (index == 0){return@forEachIndexed}
+
+                        val itemView = ItemForecastBinding.inflate(layoutInflater)
+
+                        itemView.timeTextView.text = forecastModel.fcstTime
+                        itemView.weatherTextView.text = forecastModel.sky
+                        itemView.temperatureTextview.text = forecastModel.temperature.toString()
+
+                        addView(itemView.root)
+                    }
+                }
+            },
+            failureCallback = {
+                it.printStackTrace()
+            }
+        )
     }
 
 }

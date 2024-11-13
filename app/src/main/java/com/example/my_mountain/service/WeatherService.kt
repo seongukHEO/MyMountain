@@ -1,6 +1,8 @@
 package com.example.my_mountain.service
 
-import android.telecom.Call
+
+import com.example.my_mountain.model.WeatherEntity
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -12,5 +14,5 @@ interface WeatherService {
         @Query("base_time") baseTime:String,
         @Query("nx") nx:Int,
         @Query("ny") ny:Int
-    ): Call<>
+    ): Call<WeatherEntity>
 }

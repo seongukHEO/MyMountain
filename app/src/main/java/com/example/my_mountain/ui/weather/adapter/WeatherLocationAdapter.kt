@@ -16,7 +16,7 @@ class WeatherLocationAdapter(): ListAdapter<LocationInfoModel, WeatherLocationAd
         fun bind(weatherData: LocationInfoModel){
             binding.textWeatherMountain.text = "지역 : ${weatherData.locationName}"
             binding.root.setOnClickListener {
-                recyclerviewClick.recyclerviewClickLister(weatherData.locationName, weatherData.locationLon, weatherData.locationLat)
+                recyclerviewClick.recyclerviewClickLister(weatherData.locationName, weatherData.nx, weatherData.ny)
             }
         }
     }
