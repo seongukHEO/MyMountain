@@ -53,9 +53,9 @@ class WeatherDetailActivity : AppCompatActivity() {
             successCallback = {list ->
                 val currentForecast = list.first()
 
-                binding.temperatureTextview.text = currentForecast.temperature.toString()
-                binding.skyTextview.text = currentForecast.precipitationType
-                binding.precipitationTextview.text = "강수 확률 : ${currentForecast.precipitation}"
+                binding.temperatureTextview.text = getString(R.string.temperature_text, currentForecast.temperature)
+                binding.skyTextview.text = "강수 유형 : ${currentForecast.precipitationType}"
+                binding.precipitationTextview.text = getString(R.string.precipitation_text, currentForecast.precipitation)
 
                 binding.childForecastLayout.apply {
                     list.forEachIndexed { index, forecastModel ->
@@ -65,7 +65,7 @@ class WeatherDetailActivity : AppCompatActivity() {
 
                         itemView.timeTextView.text = forecastModel.fcstTime
                         itemView.weatherTextView.text = forecastModel.sky
-                        itemView.temperatureTextview.text = forecastModel.temperature.toString()
+                        itemView.temperatureTextview.text = getString(R.string.temperature_text, currentForecast.temperature)
 
                         addView(itemView.root)
                     }
