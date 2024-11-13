@@ -66,7 +66,6 @@ class LocationInfoFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.getLocationListData()
             viewModel.locationInfoList.observe(requireActivity()) { value ->
-                Log.d("test1234", "${value.size}")
                 weatherLocationAdapter.submitList(value)
             }
         }
