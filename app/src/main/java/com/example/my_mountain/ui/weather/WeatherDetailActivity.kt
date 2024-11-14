@@ -63,7 +63,12 @@ class WeatherDetailActivity : AppCompatActivity() {
 
                         val itemView = ItemForecastBinding.inflate(layoutInflater)
 
-                        itemView.timeTextView.text = forecastModel.fcstTime
+
+                        itemView.timeTextView.text = forecastModel.fcstTime?.let {
+                            convertTo12HourFormat(
+                                it
+                            )
+                        }
                         itemView.weatherTextView.text = forecastModel.sky
                         itemView.temperatureTextview.text = getString(R.string.temperature_text, currentForecast.temperature)
 
@@ -76,5 +81,18 @@ class WeatherDetailActivity : AppCompatActivity() {
             }
         )
     }
+
+    fun convertTo12HourFormat(fcstTime: String): String {
+        // 24시간 형식의 시간 문자열을 12시간 형식으로 변환
+        val hour = fcstTime.substring(0, 2).toInt()
+        val isPM = hour >= 12
+        val convertedHour = if (hour % 12 == 0) 12 else hour % 12
+
+        // "오전" 또는 "오후" 표시 추가
+        val period = if (isPM) "오후" else "오전"
+
+        return "$period ${convertedHour}시"
+    }
+
 
 }
