@@ -1,5 +1,6 @@
 package com.example.my_mountain.ui.weather
 
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import com.example.my_mountain.dataSource.WeatherDataSource
 import com.example.my_mountain.databinding.ActivityWeatherDetailActicityBinding
 import com.example.my_mountain.databinding.ActivityWeatherInfoBinding
 import com.example.my_mountain.databinding.ItemForecastBinding
+import java.time.LocalTime
 
 class WeatherDetailActivity : AppCompatActivity() {
 
@@ -27,6 +29,7 @@ class WeatherDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         getDataLocation()
         applyApi()
+        updateBackgroundColorBasedOnTime()
 
     }
 
@@ -92,6 +95,28 @@ class WeatherDetailActivity : AppCompatActivity() {
         val period = if (isPM) "오후" else "오전"
 
         return "$period ${convertedHour}시"
+    }
+
+
+    //현재 시간 가져와서 배경 변경하기
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun updateBackgroundColorBasedOnTime() {
+        // 현재 시간을 구하기
+        val currentTime = LocalTime.now()
+        val morningTime = LocalTime.of(7, 0)   // 오전 7시
+        val eveningTime = LocalTime.of(18, 0)  // 오후 6시
+
+        // 시간에 따른 배경색 설정
+        val backgroundColor = if (currentTime.isAfter(morningTime) && currentTime.isBefore(eveningTime)) {
+            // 오전 7시 ~ 오후 6시: 빨간색 배경
+            R.drawable.weather_morning_background
+        } else {
+            // 오후 6시 ~ 다음날 오전 7시: 검정색 배경
+            R.drawable.weather_widget_background
+        }
+
+        // 배경색 적용
+        binding.root.setBackgroundResource(backgroundColor)
     }
 
 
