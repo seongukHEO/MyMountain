@@ -1,5 +1,6 @@
 package com.example.my_mountain.ui.weather
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -115,8 +116,20 @@ class WeatherDetailActivity : AppCompatActivity() {
             R.drawable.weather_widget_background
         }
 
+        // 시간에 따른 배경색 설정
+        val forecastBackgroundColor = if (currentTime.isAfter(morningTime) && currentTime.isBefore(eveningTime)) {
+            // 오전 7시 ~ 오후 6시: 빨간색 배경
+            Color.RED
+        } else {
+            // 오후 6시 ~ 다음날 오전 7시: 검정색 배경
+            Color.RED
+        }
+
         // 배경색 적용
         binding.root.setBackgroundResource(backgroundColor)
+        val forecast = ItemForecastBinding.inflate(layoutInflater)
+        forecast.root.setBackgroundColor(forecastBackgroundColor)
+
     }
 
 
